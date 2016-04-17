@@ -42,7 +42,7 @@ class ClacoAdminListener
      *
      * @param OpenAdministrationToolEvent $event
      */
-    public function onOpenClacoAdminTool(OpenAdministrationToolEvent $event)
+    public function onOpenCruncherTool(OpenAdministrationToolEvent $event)
     {
         $this->forward('CPASimUSanteClacoAdminBundle:ClacoAdmin:cruncher', $event);
     }
