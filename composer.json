@@ -1,0 +1,22 @@
+{
+    "name": "cpasimusante/claco-admin-bundle",
+    "description": "SimUSante tool for Claroline administrator",
+    "keywords": ["Claroline", "Plugin"],
+    "homepage": "http://www.claroline.net",
+    "type": "claroline-plugin",
+    "license": "GPL-3.0+",
+    "authors": [
+      {
+        "name": "SimUSante",
+        "email": "dechepy.olivier@chu-amiens.fr",
+        "homepage": "http://github.com/CPASimUSante"
+      }
+    ],
+    "require": {
+        "php": ">=5.4.1",
+        "claroline/core-bundle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": { "CPASimUSante\\ClacoAdminBundle\\": "" }
+    }
+}

@@ -1,0 +1,4 @@
+cpasimusante_clacoadmin_tool_cruncher:
+    resource: "@CPASimUSanteClacoAdminBundle/Controller/ClacoAdminController.php"
+    type: annotation
+    prefix: clacoadmin

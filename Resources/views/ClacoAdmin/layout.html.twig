@@ -1,0 +1,49 @@
+{% extends 'ClarolineCoreBundle::Administration/layout.html.twig' %}
+
+{% set clacoadminBreadcrumbs = [
+        {
+            icon: 'fa fa-cog',
+            name: 'administration'|trans({}, 'platform'),
+            href: path('claro_admin_index')
+        },
+        {
+            name: 'cruncher'|trans({}, 'tools'),
+            href: path('cpasimusante_cruncher')
+        }
+    ]
+%}
+
+{% block title %}
+    {{ parent() ~ ' - ' ~ 'cruncher'|trans({}, 'tools')|striptags|raw }}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ macros.breadcrumbs(clacoadminBreadcrumbs) }}
+{% endblock %}
+
+{% block section_content %}
+    <div class="panel-heading">
+        <div class="panel-title">
+            {% block panelTitle %}
+                {{ 'cruncher'|trans({}, 'tools') }}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="panel-body">
+        {% block panelBody %}
+            TODO
+        {% endblock %}
+    </div>
+    <div class="panel-footer">
+        {% block panelFooter %}{% endblock %}
+    </div>
+    {% block sectionRest %}{% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
