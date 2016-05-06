@@ -1,10 +1,8 @@
 {% extends 'CPASimUSanteClacoAdminBundle:ClacoAdmin:layout.html.twig' %}
 
 {% block panelBody %}
-Crunch
-{% endblock %}
-{% block panelFooter %}
-    <a id="crunch-exo" class="btn btn-primary">
-        {{ 'crunch_exo'|trans }}
+    {# display the messsages - macros in core #}
+    <a class="btn btn-primary" href="{{ path('cpasimusante_cruncher_import', { }) }}" title="{{ 'cruncher_import_file' | trans }}">
+        <i class="fa fa-cogs"></i> <span>{{ 'cruncher_import_file' | trans }}</span>
     </a>
 {% endblock %}

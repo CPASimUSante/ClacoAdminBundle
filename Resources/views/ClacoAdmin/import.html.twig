@@ -1,0 +1,85 @@
+{% extends 'CPASimUSanteClacoAdminBundle:ClacoAdmin:layout.html.twig' %}
+
+{% block title %}
+    {{ parent() ~ ' - ' ~ "cpasimusante_cruncher_import" | trans({}, "tools") | striptags | raw }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block breadcrumb %}
+        {{
+        macros.desktopBreadcrumbs([
+        {
+            'name': 'cpasimusante_cruncher_import'|trans({}, 'tools'),
+            'href': ''
+        }
+        ])
+        }}
+{% endblock %}
+
+{% block section_content %}
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ 'cpasimusante_cruncher_import'|trans({}, 'tools') }}</h3>
+    </div>
+    <div class="panel-body">
+        <a class="btn btn-primary" href="{{ path('cpasimusante_cruncher', { }) }}">
+            <i class="fa fa-arrow-left"></i> {{ 'back' | trans({}) }}
+        </a>
+        <hr>
+        <div>{{ macros.flashBox() }}</div>
+        <form id="cruncherImportForm" name="cruncherImportForm"
+            enctype="multipart/form-data" method="post"
+            action="{{ path('cpasimusante_cruncher_import', {}) }}">
+            <div class="well">
+              <p><b>Informations sur le format du fichier CSV</b></p>
+              <p>Format :</p>
+              <ul>
+                  <li>Vous ne devez pas ajouter un en-tête de fichier.</li>
+                  <li>
+                      <u>Les lignes de données sont précédée d'une ligne avec son type :</u><br>
+                      -EXERCISE-    //obligatoire<br>
+                      titre exercice;description exercice<br>
+                      -QUESTION-    //obligatoire<br>
+                      titre question;description question;type interaction;type qcm (1,2);right;false<br>
+                      -CHOICE-    //obligatoire<br>
+                      intitulé;bonne réponse(T/F);Ordre;poids;forcer la position (T/F)
+                  </li>
+                  <li>
+                      <u>Exemple :</u> <br>
+                      -EXERCISE-<br>
+                        exo title;exo description<br>
+                        -QUESTION-<br>
+                        AQ11;blabla q1;InteractionQCM;2;0;0<br>
+                        -CHOICE-<br>
+                        c4;false;1;1;false<br>
+                        c5;true;1;1;false<br>
+                        -QUESTION-<br>
+                        AQ22;blabla q2;InteractionQCM;2;0;0<br>
+                        -CHOICE-<br>
+                        c1;false;1;1;false<br>
+                        c2;true;1;1;false<br>
+                        c3;false;1;1;false
+                  </li>
+              </ul>
+            </div>
+            <p><label>{{ 'cruncher_import_exo'|trans({}, 'resource') }}</label>
+            <input id="importexofile" class="form-control" name="importexofile" type="file" /></p>
+
+            <p><label>{{ 'cruncher_import_exoquestion'|trans({}, 'resource') }}</label>
+            <input id="importexochoice" class="form-control" name="importexoquestion" type="file" /></p>
+
+            <p><label>{{ 'cruncher_import_exochoice'|trans({}, 'resource') }}</label>
+            <input id="importexochoice" class="form-control" name="importexochoice" type="file" /></p>
+
+            <p><label>{{ 'cruncher_import_exofull'|trans({}, 'resource') }}</label>
+            <input id="importexofull" class="form-control" name="importexofull" type="file" /></p>
+
+            <button type="button" class="btn btn-default">{{ 'cancel'|trans({}, 'platform') }}</button>
+            <button type="submit" class="btn btn-primary">{{ 'ok'|trans({}, 'platform') }}</button>
+        </form>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock javascripts %}
