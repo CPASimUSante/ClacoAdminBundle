@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-
+use Claroline\CoreBundle\Entity\Resource\File;
 use UJM\ExoBundle\Form\ExerciseType;
 use UJM\ExoBundle\Form\ExerciseHandler;
 use UJM\ExoBundle\Entity\Exercise;
@@ -59,7 +59,7 @@ class ClacoAdminManager
         $this->translator   = $translator;
     }
 
-    public function importFile($file, $datatype)
+    public function importFile($file, $datatype, $workspace)
     {
         $sessionFlashBag = $this->session->getFlashBag();
         $datalines = array();
@@ -77,9 +77,9 @@ class ClacoAdminManager
             $createddata = array();
 
             if ($datatype == 'all') {
-                $createddata = $this->importFullExercise($datalines, $createddata);
+                $createddata = $this->importFullExercise($datalines, $createddata, $workspace);
             } elseif ($datatype == 'exercise') {
-                $createddata = $this->importExercise($datalines, $createddata);
+                $createddata = $this->importExercise($datalines, $createddata, $workspace);
             } elseif ($datatype == 'question') {
                 $createddata = $this->importQuestion($datalines, $createddata);
             }
@@ -97,10 +97,31 @@ class ClacoAdminManager
             }
         }
     }
-
-    public function importFullExercise(array $exercises, $returnValues=array())
+    public function getWsList()
+    {
+        $wslist = $this->om->getRepository('ClarolineCoreBundle:Workspace\Workspace')
+            ->findAll();
+        return $wslist;
+    }
+    /**
+     * Creates a full exercise from a csv file.
+     *
+     */
+    public function importFullExercise(array $exercises, $returnValues=array(), $workspace_to_import_to = 0)
     {
         $user = $this->tokenStorage->getToken()->getUser();
+        //defaut ws : admin personal WS
+        $workspace = $user->getPersonalWorkspace();
+        if ($workspace_to_import_to != 0){
+            $workspace = $this->om->getRepository('ClarolineCoreBundle:Workspace\Workspace')
+                ->findOneById($workspace_to_import_to);
+        }
+        $rootDir = $this->om->getRepository('ClarolineCoreBundle:Resource\ResourceNode')
+            ->findWorkspaceRoot($workspace);
+
+        $resource_manager = $this->container->get('claroline.manager.resource_manager');
+        $guid = $this->container->get('claroline.utilities.misc')->generateGuid();
+
         //get icon
         $exoIcon = $this->om
             ->getRepository('ClarolineCoreBundle:Resource\ResourceIcon')
@@ -136,12 +157,11 @@ class ClacoAdminManager
                 $node->setName($exercise[0]);
                 $node->setMimeType('custom/ujm_exercise');
                 $node->setResourceType($exoType);
-    //TODO : choose WS
-                $node->setWorkspace($user->getPersonalWorkspace());
-    //TODO : choose user
+                $node->setWorkspace($workspace);
+                $node->setParent($rootDir);
+    //TODO : choose user (owner of ws ?)
                 $node->setCreator($user);
-    //TODO : set correct GUID
-                $node->setGuid(time());
+                $node->setGuid($guid);
                 $node->setClass('UJM\ExoBundle\Entity\Exercise');
                 $node->setIcon($exoIcon);
                 $node->setIndex(1);
@@ -205,6 +225,7 @@ class ClacoAdminManager
             }
         }
         $this->om->endFlushSuite();
+
     }
 
     public function importExercise(array $exercises, $returnValues=array())

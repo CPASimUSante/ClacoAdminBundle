@@ -2,7 +2,7 @@
 
 {% block panelBody %}
     {# display the messsages - macros in core #}
-    <a class="btn btn-primary" href="{{ path('cpasimusante_cruncher_import', { }) }}" title="{{ 'cruncher_import_file' | trans }}">
-        <i class="fa fa-cogs"></i> <span>{{ 'cruncher_import_file' | trans }}</span>
+    <a class="btn btn-primary" href="{{ path('cpasimusante_cruncher_import', { }) }}" title="{{ 'cruncher_import_file'|trans({}, 'resource') }}">
+        <i class="fa fa-cogs"></i> <span>{{ 'cruncher_import_file'|trans({}, 'resource') }}</span>
     </a>
 {% endblock %}

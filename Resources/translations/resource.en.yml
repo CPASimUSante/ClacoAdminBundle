@@ -1,0 +1,5 @@
+cruncher_import_file: 'import a file'
+cruncher_import_exoquestion: 'import questions'
+cruncher_import_exochoice: 'import choices'
+cruncher_import_exofull: 'import full exercises'
+cruncher_choose_ws: 'Workspace in which import the resource into'

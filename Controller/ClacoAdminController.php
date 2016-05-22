@@ -83,20 +83,23 @@ class ClacoAdminController
         $importexofile = $this->request->files->get('importexofile');
         $importexoquestion = $this->request->files->get('importexoquestion');
         $importexochoice = $this->request->files->get('importexochoice');
+        $workspace = $this->request->get('workspace_to_import_to');
+
+        $wslist = $this->clacoAdminManager->getWsList();
 
         if (isset($importexofull)) {
-            $this->clacoAdminManager->importFile($importexofull, 'all');
+            $this->clacoAdminManager->importFile($importexofull, 'all', (int)$workspace);
         }
         if (isset($importexofile)) {
             //if ($questionfile->getMimeType() != 'text/csv')
-            $this->clacoAdminManager->importFile($importexofile, 'exercise');
+            $this->clacoAdminManager->importFile($importexofile, 'exercise', (int)$workspace);
         }
         if (isset($importexoquestion)) {
-            $this->clacoAdminManager->importFile($importexoquestion, 'question');
+            $this->clacoAdminManager->importFile($importexoquestion, 'question', '');
         }
 
         return array(
-
+            'wslist' => $wslist,
         );
     }
 

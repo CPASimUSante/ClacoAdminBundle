@@ -60,9 +60,18 @@
                         c1;false;1;1;false<br>
                         c2;true;1;1;false<br>
                         c3;false;1;1;false
-                  </li>
+                </li>
               </ul>
             </div>
+
+            <p><label>{{ 'cruncher_choose_ws'|trans({}, 'resource') }}</label>
+            <select class="form-control" name="workspace_to_import_to">
+                {% for ws in wslist %}
+                    <option value="{{ws.id}}">{{ws.name}}</option>
+                {% endfor %}
+            {##}
+            </select></p>
+
             <p><label>{{ 'cruncher_import_exo'|trans({}, 'resource') }}</label>
             <input id="importexofile" class="form-control" name="importexofile" type="file" /></p>
 

@@ -1,0 +1,5 @@
+cruncher_import_file: 'importer un fichier'
+cruncher_import_exoquestion: 'importer des questions'
+cruncher_import_exochoice: 'importer des choix'
+cruncher_import_exofull: 'importer des exercices complets'
+cruncher_choose_ws: 'Espace dans lequel importer la/les resource(s)'
